@@ -6,12 +6,12 @@
   
 # Whats it about?
 
-  This is a C++ / C# project that gets the game word from generated through C# and then passes the word over to C++.
+  This is a C++ / C# project that gets the game word generated through C# and then gets passed on to C++ for the actual game. This is a fun project built to       implement the knowledge gained in the COMP-2315 "Structured Programming" course. This includes using array manipulation, functions, loops and the task of  passing on a variable through a DLL connection.
   
 # Features
 
 - Colorful in-terminal game
-- Random words provided by C# 
+- Pre-established game words provided by C# 
 
 # Developed by
 
