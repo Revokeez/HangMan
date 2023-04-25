@@ -12,6 +12,7 @@
 
 - Colorful in-terminal game
 - Pre-established game words provided by C# 
+- DLL connection from C# to C++ for game words
 
 # Developed by
 
