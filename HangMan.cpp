@@ -10,75 +10,83 @@ using namespace std;
 #define color SetConsoleTextAttribute
 
 const int OPPORTUNITIES = 6;
-string words[3] = { "house", "mirror", "floor" };
+string words[5] = { "house", "mirror", "floor", "tigre", "Inter"};
 string selectedWord;
 bool guessedLetters[6];
 int guessCount = 0;
 string gallows[7];
 
 void Init() {
-    srand(time(nullptr)); // Seed random number generator
-    int rIndex = rand() % 3; // Get random index
+    srand(time(NULL)); // Seed random number generator
+    int rIndex = rand() % 5; // Get random index
     selectedWord = words[rIndex]; // Select word
     for (int i = 0; i < 6; i++) {
         guessedLetters[i] = false;
     }
-    hand;
-    color(hConsole, 7);
-    gallows[0] = "_____ \n"
-        "| |   \n"
-        "|     \n"
-        "|     \n"
-        "|     \n"
-        "|______ \n";
-    hand;
-    color(hConsole, 2);
-    gallows[1] = "_____ \n"
-        "| |   \n"
-        "| O   \n"
-        "|     \n"
-        "|     \n"
-        "|______ \n";
-    hand;
-    color(hConsole, 6);
-    gallows[2] = "_____  \n"
-        "| |  \n"
-        "| O  \n"
-        "| |  \n"
-        "|    \n"
-        "|______ \n";
-    hand;
-    color(hConsole, 3);
-    gallows[3] = "_____  \n"
-        "| |  \n"
-        "| O  \n"
-        "|/|  \n"
-        "|    \n"
-        "|______ \n";
-    hand;
-    color(hConsole, 1);
-    gallows[4] = "_____  \n"
-        "| |  \n"
-        "| O  \n"
-        "|/|\\ \n"
-        "|    \n"
-        "|______ \n";
-    hand;
-    color(hConsole, 4);
-    gallows[5] = "_____  \n"
-        "| |  \n"
-        "| O  \n"
-        "|/|\\ \n"
-        "|/   \n"
-        "|______ \n";
-    hand;
-    color(hConsole, 5);
-    gallows[6] = "_____  \n"
-        "|  |  \n";
-        "|  O  \n";
-        "| /|\\  \n";
-        "| / \\  \n";
-        "|______";
+
+    gallows[0] = R"( 
+        _____ 
+        | |   
+        |     
+        |     
+        |     
+        |______ 
+)";
+
+    gallows[1] = R"( 
+        _____ 
+        | |   
+        | O   
+        |     
+        |     
+        |______ 
+)";
+ 
+    gallows[2] = R"( 
+        _____ 
+        | |   
+        | O   
+        | |    
+        |     
+        |______ 
+)";
+
+    gallows[3] = R"( 
+        _____ 
+        | |   
+        | O   
+        | |\    
+        |     
+        |______ 
+)";
+  
+    gallows[4] = R"( 
+        ______ 
+        |  |   
+        |  O   
+        | /|\    
+        |     
+        |______ 
+)";
+
+    gallows[5] = R"( 
+        ______ 
+        |  |   
+        |  O   
+        | /|\    
+        | /   
+        |______ 
+)";
+ 
+    gallows[6] = R"( 
+        ______ 
+        |  |   
+        |  O   
+        | /|\    
+        | / \  
+        |______ 
+)";
+
 
 }
 void ShowGameStartScreen() {
@@ -86,17 +94,21 @@ void ShowGameStartScreen() {
 }
 
 void ShowBoard() {
+    system("cls");
     cout << gallows[guessCount] << endl;
 
     for (int i = 0; i < selectedWord.length(); i++) {
         if (guessedLetters[i] == true) {
             cout << selectedWord[i] << " ";
+
         }
         else {
             cout << "_ ";
         }
     }
+
     cout << endl;
+
 }
 
 void ShowInputOptions() {
