@@ -10,7 +10,7 @@ using namespace std;
 #define color SetConsoleTextAttribute
 
 const int OPPORTUNITIES = 6;
-string words[5] = { "house", "mirror", "floor", "tigre", "Inter"};
+string words[8] = { "house", "mirror", "floor", "tiger", "inter", "mapache","cantador","programing"};
 string selectedWord;
 bool guessedLetters[6];
 int guessCount = 0;
