@@ -3,10 +3,12 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-
+#include <cstdlib>
+#include <ctime>
+#include <cctype>
+#define hand HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE)
+#define color SetConsoleTextAttribute
 using namespace std;
-
-//#define color SetConsoleTextAttribute
 
 const int OPPORTUNITIES = 6;
 
@@ -17,6 +19,34 @@ string gallows[7];
 string words[20];
 int length = 0;
 
+void title() {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    color(hConsole, 2);
+
+    cout << R"(
+    ___     ___          ___        _____        __     ________
+   |   |   |   |        / _ \       | |\ \      | |   / _______|
+   |   |___|   |       / / \ \      | | \ \     | |  / /
+   |           |      / /___\ \     | |  \ \    | | | |
+   |    ___    |     / ______\ \    | |   \ \   | | | |    ______     
+   |   |   |   |    / /       \ \   | |    \ \  | | | |    |___ |
+   |   |   |   |   / /         \ \  | |     \ \ | |  \ \______| |    
+   |___|   |___|  /_/           \_\ |_|      \_\|_|   \_________|
+)";
+
+    cout << R"( 
+    ___        ___          ___        _____        __
+   |   \      /   |        / _ \       | |\ \      | |
+   |    \    /    |       / / \ \      | | \ \     | |
+   |  |\ \  / /|  |      / /___\ \     | |  \ \    | |
+   |  | \ \/ / |  |     / ______\ \    | |   \ \   | |
+   |  |  \__/  |  |    / /       \ \   | |    \ \  | |
+   |  |        |  |   / /         \ \  | |     \ \ | |
+   |__|        |__|  /_/           \_\ |_|      \_\|_|
+)";
+    Sleep(4000);
+    system("cls");
+}
 void Initialising() {
     srand(time(nullptr)); //random number generator
     int rIndex = rand() % length; // Get random index
@@ -73,6 +103,7 @@ void ShowGameStartScreen() {
 }
 
 void ShowBoard() {
+    system("CLS");
     cout << gallows[guessCount] << endl;
 
     for (int i = 0; i < selectedWord.length(); i++) {
@@ -208,6 +239,7 @@ void PassingWords() {
 int main()
 {
     PassingWords();
+    title();
 
     Start();
 
