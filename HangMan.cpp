@@ -6,16 +6,40 @@
 #include <cctype>
 using namespace std;
 
-#define hand HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE)
-#define color SetConsoleTextAttribute
-
 const int OPPORTUNITIES = 6;
 string words[8] = { "house", "mirror", "floor", "tiger", "inter", "mapache","cantador","programing"};
 string selectedWord;
 bool guessedLetters[6];
 int guessCount = 0;
 string gallows[7];
+void title() {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    color(hConsole, 2);
 
+    cout << R"(
+    ___     ___          ___        _____        __     ________
+   |   |   |   |        / _ \       | |\ \      | |   / _______|
+   |   |___|   |       / / \ \      | | \ \     | |  / /
+   |           |      / /___\ \     | |  \ \    | | | |
+   |    ___    |     / ______\ \    | |   \ \   | | | |    ______     
+   |   |   |   |    / /       \ \   | |    \ \  | | | |    |___ |
+   |   |   |   |   / /         \ \  | |     \ \ | |  \ \______| |    
+   |___|   |___|  /_/           \_\ |_|      \_\|_|   \_________|
+)";
+
+    cout << R"( 
+    ___        ___          ___        _____        __
+   |   \      /   |        / _ \       | |\ \      | |
+   |    \    /    |       / / \ \      | | \ \     | |
+   |  |\ \  / /|  |      / /___\ \     | |  \ \    | |
+   |  | \ \/ / |  |     / ______\ \    | |   \ \   | |
+   |  |  \__/  |  |    / /       \ \   | |    \ \  | |
+   |  |        |  |   / /         \ \  | |     \ \ | |
+   |__|        |__|  /_/           \_\ |_|      \_\|_|
+)";
+    Sleep(4000);
+    system("cls");
+}
 void Init() {
     srand(time(NULL)); // Seed random number generator
     int rIndex = rand() % 5; // Get random index
@@ -213,6 +237,7 @@ void Start() {
 }
 int main()
 {
+    title();
     Start();
 
     return 0;
