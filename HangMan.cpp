@@ -19,7 +19,7 @@ int length = 0;
 
 void Initialising() {
     srand(time(nullptr)); //random number generator
-    int rIndex = rand() % 3; // Get random index
+    int rIndex = rand() % length; // Get random index
     selectedWord = words[rIndex]; // Select word
     for (int i = 0; i < 6; i++) {
         guessedLetters[i] = false;
