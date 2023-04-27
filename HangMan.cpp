@@ -1,5 +1,6 @@
 #include <iostream>
-#include <Windows.h>
+#include <cstdlib>
+#include <ctime>
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -109,12 +110,15 @@ void ShowBoard() {
     for (int i = 0; i < selectedWord.length(); i++) {
         if (guessedLetters[i] == true) {
             cout << selectedWord[i] << " ";
+
         }
         else {
             cout << "_ ";
         }
     }
+
     cout << endl;
+
 }
 
 void ShowInputOptions() {
