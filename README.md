@@ -2,7 +2,7 @@
 
   This project is a simple Hangman game implemented in C++. 
   
-  Enjoy guessing the hidden word! :)
+  Enjoy guessing the hidden word! :D
   
 # Whats it about?
 
