@@ -15,8 +15,9 @@ bool guessedLetters[7];
 int guessCount = 0;
 string gallows[7];
 string words[20];
+int length = 0;
 
-void Init() {
+void Initialising() {
     srand(time(nullptr)); //random number generator
     int rIndex = rand() % 3; // Get random index
     selectedWord = words[rIndex]; // Select word
@@ -173,7 +174,7 @@ void ShowGameOverScreen()
 
 void Start() {
     string input;
-    Init();
+    Initialising();
     ShowGameStartScreen();
     do {
         ShowBoard();
@@ -188,7 +189,6 @@ void Start() {
 void PassingWords() {
     fstream readFile("words.txt");
     string text;
-    int i = 0;
     while (getline(readFile, text))
     {
         text = text;
@@ -197,9 +197,10 @@ void PassingWords() {
     while (getline(seperate, text, '/'))
     {
 
-        words[i] = text;
+        words[length] = text;
 
-        i++;
+     
+        length++;
     }
     readFile.close();
 }
