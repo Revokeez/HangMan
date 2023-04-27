@@ -1,184 +1,23 @@
-
 #include <iostream>
 #include <Windows.h>
 #include <string>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
-#define color SetConsoleTextAttribute
-
-/*bool gameRunning = true;
-string words[3] = { "house", "mirror", "floor" };
-string selectedWord;
-bool guessedLetters[10];
-int guessCount = 0;
-
-void hangman1() {
-
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    color(hConsole, 7);
-    cout << R"(
-
-                      ___  
-                      |  
-                      |  
-                      |   
-                      |   
-                      |__  
-    
-)";
-}
-void hangman2() {
-
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    color(hConsole, 2);
-    cout << R"(
-                      ___  
-                      |  |  
-                      |  
-                      |  
-                      |  
-                      |__  
-    
-)";
-}
-void hangman3() {
-    system("cls");
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    color(hConsole, 6);
-    cout << R"(
-                      ___  
-                      |  |  
-                      |  O  
-                      |  
-                      |   
-                      |__  
-    
-)";
-}
-void hangman4() {
-    system("cls");
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    color(hConsole, 3);
-    cout << R"(
-                      ___  
-                      |  |  
-                      |  O  
-                      |  |  
-                      |   
-                      |__  
-    
-)";
-}
-void hangman5() {
-    system("cls");
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    color(hConsole, 1);
-    cout << R"(
-                      ___  
-                      |  |  
-                      |  O  
-                      | /|\  
-                      |   
-                      |__  
-    
-)";
-}
-void hangman6() {
-    system("cls");
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    color(hConsole, 4);
-    cout << R"(
-                      ___  
-                      |  |  
-                      |  O  
-                      | /|\  
-                      | / \  
-                      |__  
-    
-)";
-
-}
-void ShowDrawings()
-{
-    int rIndex = rng.Next(words.Length);//This
-    selectedWord = words[rIndex];//This will choose a word from the array word.
-    guessedLetters = new bool[selectedWord.Length];
-
-    string words[3] = { "house", "mirror", "floor" };
-
-    srand(time(nullptr));
-    int rIndex = rand() % 3;
-    selectedWord = words[rIndex];
-    guessCount = 0;
-
-    switch (guessCount)
-    {
-    case 0:
-        hangman1();
-        break;
-    case 1:
-        hangman2();
-        break;
-    case 2:
-        hangman3();
-        break;
-    case 3:
-        hangman4();
-        break;
-    case 4:
-        hangman5();
-        break;
-    case 5:
-        hangman6();
-        break;
-    }
-
-    //selectedWord = words[rIndex];
-}
-int main()
-{
-
-    int repetir = 0;
-    string selectedword[5];//Por ahora
-    string playerChoice;//La opcion que el jugador escogio
-    
-
-    do {
-        hangman1();
-        hangman2();
-        hangman3();
-        hangman4();
-        hangman5();
-        hangman6();
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        color(hConsole, 7);
-        repetir++;
-    } while (repetir < 2);
-    hangman6();
-    cout << "WELCOME TO HANGMAN\n";
-    cout << "Wright the letter:";
-    cin >> playerChoice;
-}*/
-
-
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <string>
-
-using namespace std;
+//#define color SetConsoleTextAttribute
 
 const int OPPORTUNITIES = 6;
-string words[3] = { "house", "mirror", "floor" };
+
 string selectedWord;
-bool guessedLetters[6];
+bool guessedLetters[7];
 int guessCount = 0;
 string gallows[7];
+string words[20];
 
 void Init() {
-    srand(time(nullptr)); // Seed random number generator
+    srand(time(nullptr)); //random number generator
     int rIndex = rand() % 3; // Get random index
     selectedWord = words[rIndex]; // Select word
     for (int i = 0; i < 6; i++) {
@@ -221,11 +60,11 @@ void Init() {
         "|/   \n"
         "|______ \n";
     gallows[6] = "_____  \n"
-        "|  |  \n";
-        "|  O  \n";
-        "| /|\\  \n";
-        "| / \\  \n";
-        "|______"
+        "|  |  \n"
+        "|  O  \n"
+        "| /|\\  \n"
+        "| / \\  \n"
+        "|______";
 
 }
 void ShowGameStartScreen() {
@@ -320,11 +159,11 @@ void ShowGameOverScreen()
 {
     ShowBoard();
     cout << endl;
-    cout << "Game Over!";
+    cout << "Game Over!\n";
     if (CheckWin())
     {
         cout << "You Won!" << endl;
-        cout << "You have" << guessCount << "incorrect guesses" << endl;
+        cout << "You have " << guessCount << " incorrect guesses" << endl;
     }
     else
     {
@@ -346,8 +185,29 @@ void Start() {
     } while (!IsGameOver());
     ShowGameOverScreen();
 }
+void PassingWords() {
+    fstream readFile("words.txt");
+    string text;
+    int i = 0;
+    while (getline(readFile, text))
+    {
+        text = text;
+    }
+    stringstream seperate(text);
+    while (getline(seperate, text, '/'))
+    {
+
+        words[i] = text;
+
+        i++;
+    }
+    readFile.close();
+}
+
 int main()
 {
+    PassingWords();
+
     Start();
 
     return 0;
