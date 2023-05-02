@@ -3,12 +3,11 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <cstdlib>
-#include <ctime>
-#include <cctype>
 #define hand HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE)
 #define color SetConsoleTextAttribute
 using namespace std;
+
+//#define color SetConsoleTextAttribute
 
 const int OPPORTUNITIES = 6;
 
@@ -17,40 +16,13 @@ bool guessedLetters[7];
 int guessCount = 0;
 string gallows[7];
 string words[20];
-int length = 0;
+int wins = 0;
 
-void title() {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    color(hConsole, 2);
-
-    cout << R"(
-    ___     ___          ___        _____        __     ________
-   |   |   |   |        / _ \       | |\ \      | |   / _______|
-   |   |___|   |       / / \ \      | | \ \     | |  / /
-   |           |      / /___\ \     | |  \ \    | | | |
-   |    ___    |     / ______\ \    | |   \ \   | | | |    ______     
-   |   |   |   |    / /       \ \   | |    \ \  | | | |    |___ |
-   |   |   |   |   / /         \ \  | |     \ \ | |  \ \______| |    
-   |___|   |___|  /_/           \_\ |_|      \_\|_|   \_________|
-)";
-
-    cout << R"( 
-    ___        ___          ___        _____        __
-   |   \      /   |        / _ \       | |\ \      | |
-   |    \    /    |       / / \ \      | | \ \     | |
-   |  |\ \  / /|  |      / /___\ \     | |  \ \    | |
-   |  | \ \/ / |  |     / ______\ \    | |   \ \   | |
-   |  |  \__/  |  |    / /       \ \   | |    \ \  | |
-   |  |        |  |   / /         \ \  | |     \ \ | |
-   |__|        |__|  /_/           \_\ |_|      \_\|_|
-)";
-    Sleep(4000);
-    system("cls");
-}
-void Initialising() {
+void Init() {
     srand(time(nullptr)); //random number generator
-    int rIndex = rand() % length; // Get random index
+    int rIndex = rand() % 3; // Get random index
     selectedWord = words[rIndex]; // Select word
+    guessCount = 0;
     for (int i = 0; i < 6; i++) {
         guessedLetters[i] = false;
     }
@@ -99,7 +71,30 @@ void Initialising() {
 
 }
 void ShowGameStartScreen() {
-    cout << "Welcome to Hangman" << endl;
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    color(hConsole, 2);
+    cout << R"(
+    ___     ___          ___        _____        __     ________
+   |   |   |   |        / _ \       | |\ \      | |   / _______|
+   |   |___|   |       / / \ \      | | \ \     | |  / /
+   |           |      / /___\ \     | |  \ \    | | | |
+   |    ___    |     / ______\ \    | |   \ \   | | | |    ______     
+   |   |   |   |    / /       \ \   | |    \ \  | | | |    |___ |
+   |   |   |   |   / /         \ \  | |     \ \ | |  \ \______| |    
+   |___|   |___|  /_/           \_\ |_|      \_\|_|   \_________|
+)";
+
+    cout << R"( 
+    ___        ___          ___        _____        __
+   |   \      /   |        / _ \       | |\ \      | |
+   |    \    /    |       / / \ \      | | \ \     | |
+   |  |\ \  / /|  |      / /___\ \     | |  \ \    | |
+   |  | \ \/ / |  |     / ______\ \    | |   \ \   | |
+   |  |  \__/  |  |    / /       \ \   | |    \ \  | |
+   |  |        |  |   / /         \ \  | |     \ \ | |
+   |__|        |__|  /_/           \_\ |_|      \_\|_|
+)";
+    Sleep(4000);
 }
 
 void ShowBoard() {
@@ -205,7 +200,7 @@ void ShowGameOverScreen()
 
 void Start() {
     string input;
-    Initialising();
+    Init();
     ShowGameStartScreen();
     do {
         ShowBoard();
@@ -217,9 +212,11 @@ void Start() {
     } while (!IsGameOver());
     ShowGameOverScreen();
 }
+
 void PassingWords() {
-    fstream readFile("words.txt");
+    ifstream readFile("words.txt");
     string text;
+    int i = 0;
     while (getline(readFile, text))
     {
         text = text;
@@ -228,20 +225,257 @@ void PassingWords() {
     while (getline(seperate, text, '/'))
     {
 
-        words[length] = text;
+        words[i] = text;
 
-
-        length++;
+        i++;
     }
     readFile.close();
+}
+
+
+void CreateAccount()
+{
+
+    ifstream readFile("Usernames.txt");
+    string text, text2;
+    string username;
+    string password;
+    string loginusernames[10];
+    int i = 0;
+    int limit = 0;
+    while (getline(readFile, text))
+    {
+        text = text;
+    }
+    stringstream seperate(text);
+    //Usernames
+    while (getline(seperate, text, '/'))
+    {
+
+        loginusernames[i] = text;
+        i++;
+        limit++;
+    }
+    readFile.close();
+    ///////////////////////////////////
+
+    ifstream readFile2("passwords.txt");
+    string textp, textp2;
+    string usernamep;
+    string passwordp;
+    string loginpasswords[10];
+    i = 0;
+    limit = 0;
+    while (getline(readFile2, textp))
+    {
+        textp = textp;
+    }
+    stringstream seperate2(textp);
+    //Usernames
+    while (getline(seperate2, textp, '/'))
+    {
+
+        loginpasswords[i] = textp;
+        i++;
+        limit++;
+    }
+    readFile2.close();
+
+    string usernameinput, passwordinput;
+    cout << R"(
+            _____________________
+            |                   |
+            |   Create Account  |
+            |                   |
+            ---------------------
+            )" << endl;
+
+    cout << "Enter your account name\n";
+    cin >> usernameinput;
+    cout << "Enter your password\n";
+    cin >> passwordinput;
+
+    for (int i = 0; i < limit; i++)
+    {
+        if (loginusernames[i] == usernameinput)
+        {
+            cout << "This username already exist\n";
+            cout << "Enter your account name\n";
+            cin >> usernameinput;
+            cout << "Enter your password\n";
+            cin >> passwordinput;
+            i = 0;
+        }
+        else if (usernameinput.length() < 8 && passwordinput.length() < 8)
+        {
+            cout << "Please enter a valid length for your username or password\n";
+            cout << "Enter your account name\n";
+            cin >> usernameinput;
+            cout << "Enter your password\n";
+            cin >> passwordinput;
+            i = 0;
+        }
+        system("CLS");
+    }
+    cout << "Account succesfuly created";
+    system("pause");
+    ofstream NewUsername("Usernames.txt", ofstream::app);
+
+    NewUsername << usernameinput << "/";
+
+    NewUsername.close();
+
+    ofstream NewPassword("passwords.txt", ofstream::app);
+
+    NewPassword << passwordinput << "/";
+
+    NewPassword.close();
+
+    ofstream SignalPort("SignalPort.txt");
+
+    SignalPort << "SendInformation";
+
+    SignalPort.close();
+
+}
+void Login()
+{
+    ifstream readFile("Usernames.txt");
+    string text, text2;
+    string loginusernames[10];
+    int i = 0;
+    int limit = 0;
+    while (getline(readFile, text))
+    {
+
+    }
+    stringstream seperate(text);
+    //Usernames
+    while (getline(seperate, text, '/'))
+    {
+        loginusernames[i] = text;
+        i++;
+        limit++;
+    }
+    readFile.close();
+    ///////////////////////////////////
+
+    ifstream readFile2("passwords.txt");
+    string textp, textp2;
+    string loginpasswords[10];
+    i = 0;
+    while (getline(readFile2, textp))
+    {
+
+    }
+    stringstream seperate2(textp);
+    //Usernames
+    while (getline(seperate2, textp, '/'))
+    {
+        loginpasswords[i] = textp;
+        i++;
+    }
+    readFile2.close();
+
+    cout << R"(
+            _____________________
+            |                   |
+            |      Login:       |
+            |                   |
+            ---------------------
+            )" << endl;
+    string usernameinput, passwordinput;
+    cout << "Enter your account name\n";
+    cin >> usernameinput;
+    cout << "Enter your password\n";
+    cin >> passwordinput;
+    int checkUserLimit = 0;
+    for (int j = 0; j < limit; j++)
+    {
+        cout << j << endl;
+        system("pause");
+        if (usernameinput == loginusernames[j] && passwordinput == loginpasswords[j])
+        {
+            cout << "Welcome: " << usernameinput << endl;
+            system("pause");
+            system("CLS");
+            break;
+        }
+        else if (checkUserLimit == limit - 1)
+        {
+            system("CLS");
+            cout << "Username or password dosent match\n";
+            cout << "Enter your account name\n";
+            cin >> usernameinput;
+            cout << "Enter your password\n";
+            cin >> passwordinput;
+            j -= j + 1;
+            checkUserLimit = 0;
+        }
+        checkUserLimit += 1;
+    }
+
+    ofstream SignalPort("SignalPort.txt");
+
+    SignalPort << "SendInformation";
+
+    SignalPort.close();
+}
+
+void ServerActive()
+{
+    ofstream Activating("IsServerActive.txt");
+
+    Activating << "ActiveServer";
+
+    Activating.close();
+
+
+}
+void ServerShutDown()
+{
+    ofstream Shutingdown("IsServerActive.txt");
+
+    Shutingdown << "NA";
+
+    Shutingdown.close();
 }
 
 int main()
 {
     PassingWords();
-    title();
+    string answer = "";
+    do
+    {
+        system("CLS");
+        ServerActive();
+        cout << "Press [1] Login to your account or Press [2] Create account: ";
+        cin >> answer;
+        while (answer != "1" && answer != "2")
+        {
+            system("CLS");
+            cout << "Please enter a valid opcion\n";
+            cout << "Press [1] Login to your account or Press [2] Create account";
+            cin >> answer;
 
-    Start();
+        }
+        if (answer == "1")
+        {
+            Login();
+
+        }
+        else if (answer == "2")
+        {
+            CreateAccount();
+            system("CLS");
+            Login();
+        }
+        Start();
+        cout << "Want to play again press [0] if not press any number\n";
+        cin >> answer;
+    } while (answer == "0");
+
+    ServerShutDown();
 
     return 0;
 }
