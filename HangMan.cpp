@@ -7,14 +7,12 @@
 #define color SetConsoleTextAttribute
 using namespace std;
 
-//#define color SetConsoleTextAttribute
-
 const int OPPORTUNITIES = 6;
 
 string selectedWord;
 bool guessedLetters[7];
 int guessCount = 0;
-string gallows[7];
+string drawings[7];
 string words[20];
 int wins = 0;
 
@@ -26,43 +24,43 @@ void Init() {
     for (int i = 0; i < 6; i++) {
         guessedLetters[i] = false;
     }
-    gallows[0] = "_____ \n"
+    drawings[0] = "_____ \n"
         "| |   \n"
         "|     \n"
         "|     \n"
         "|     \n"
         "|______ \n";
-    gallows[1] = "_____ \n"
+    drawings[1] = "_____ \n"
         "| |   \n"
         "| O   \n"
         "|     \n"
         "|     \n"
         "|______ \n";
-    gallows[2] = "_____  \n"
+    drawings[2] = "_____  \n"
         "| |  \n"
         "| O  \n"
         "| |  \n"
         "|    \n"
         "|______ \n";
-    gallows[3] = "_____  \n"
+    drawings[3] = "_____  \n"
         "| |  \n"
         "| O  \n"
         "|/|  \n"
         "|    \n"
         "|______ \n";
-    gallows[4] = "_____  \n"
+    drawings[4] = "_____  \n"
         "| |  \n"
         "| O  \n"
         "|/|\\ \n"
         "|    \n"
         "|______ \n";
-    gallows[5] = "_____  \n"
+    drawings[5] = "_____  \n"
         "| |  \n"
         "| O  \n"
         "|/|\\ \n"
         "|/   \n"
         "|______ \n";
-    gallows[6] = "_____  \n"
+    drawings[6] = "_____  \n"
         "|  |  \n"
         "|  O  \n"
         "| /|\\  \n"
@@ -99,7 +97,7 @@ void ShowGameStartScreen() {
 
 void ShowBoard() {
     system("CLS");
-    cout << gallows[guessCount] << endl;
+    cout << drawings[guessCount] << endl;
 
     for (int i = 0; i < selectedWord.length(); i++) {
         if (guessedLetters[i] == true) {
@@ -392,8 +390,6 @@ void Login()
     int checkUserLimit = 0;
     for (int j = 0; j < limit; j++)
     {
-        cout << j << endl;
-        system("pause");
         if (usernameinput == loginusernames[j] && passwordinput == loginpasswords[j])
         {
             cout << "Welcome: " << usernameinput << endl;
